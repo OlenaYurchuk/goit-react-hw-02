@@ -1,14 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Description from '../Description/Description'
 import Feedback from '../Feedback/Feedback'
 import Options from '../Options/Options'
 import Notification from '../Notification/Notification'
 
 function App() {
-  const [values, setValues] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0
+  const [values, setValues] = useState(() => {
+    const savedFeedback = localStorage.getItem("saved-feedback");
+    if (savedFeedback !== null) {
+      return JSON.parse(savedFeedback);
+    }
+    return {
+      good: 0,
+      neutral: 0,
+      bad: 0
+    }
   });
 
   const updateFeedback = feedbackType => {
@@ -25,12 +31,16 @@ function App() {
   const handleReset = () => {
     setValues({ good: 0, neutral: 0, bad: 0 })
   }
+
+  useEffect(() => {
+    localStorage.setItem('saved-feedback', JSON.stringify(values))
+  }, [values])
   return (
     <>
       <Description />
-      <Options onFeedback={updateFeedback} onReset={handleReset} totalFeedback={totalFeedback} />
+      <Options onFeedback={updateFeedback} onReset={handleReset} total={totalFeedback} />
       {totalFeedback > 0 ? (
-        <Feedback values={values} totalFeedback={totalFeedback} positive={positiveFeedback} />
+        <Feedback values={values} total={totalFeedback} positive={positiveFeedback} />
       ) : (
         <Notification />
       )
