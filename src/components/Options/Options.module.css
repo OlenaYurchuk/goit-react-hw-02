@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.btnGood {
+  background-color: blue;
+}
+
+.btnNeurtal {
+  background-color: green;
+}
+
+.btnBad {
+  background-color: red;
+}

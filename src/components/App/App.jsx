@@ -3,6 +3,7 @@ import Description from '../Description/Description'
 import Feedback from '../Feedback/Feedback'
 import Options from '../Options/Options'
 import Notification from '../Notification/Notification'
+import css from './App.module.css'
 
 function App() {
   const [values, setValues] = useState(() => {
@@ -36,7 +37,7 @@ function App() {
     localStorage.setItem('saved-feedback', JSON.stringify(values))
   }, [values])
   return (
-    <>
+    <div className={css.container}>
       <Description />
       <Options onFeedback={updateFeedback} onReset={handleReset} total={totalFeedback} />
       {totalFeedback > 0 ? (
@@ -45,7 +46,7 @@ function App() {
         <Notification />
       )
       }
-    </>
+    </div>
   )
 }
 export default App
